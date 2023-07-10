@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">smart_garden_android</string>
+    <string name="app_name">Smart Garden</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-    <string name="plant_list">Lista Piante</string>
-    <string name="plant_add">Aggiungi Pianta</string>
 </resources>

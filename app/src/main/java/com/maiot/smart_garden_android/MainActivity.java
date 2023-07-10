@@ -3,49 +3,63 @@ package com.maiot.smart_garden_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.navigation.NavigationView;
+import com.maiot.smart_garden_android.fragments.AddPlantFragment;
 
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.plant_view);
+        setContentView(R.layout.main);
 
-        // drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
+        Toolbar toolbar = findViewById(R.id.toolbar); //recupero la toolbar
+        setSupportActionBar(toolbar); //setto la toolbar
+
         drawerLayout = findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this); //setto il listener per il menu laterale
 
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        // to make the Navigation drawer icon always appear on the action bar
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close); //creo il toggle per aprire e chiudere il menu laterale
+        drawerLayout.addDrawerListener(toggle); //setto il listener per il menu laterale
+        toggle.syncState();
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit(); //setto il fragment iniziale
+            navigationView.setCheckedItem(R.id.nav_plant_add); //setto il menu laterale iniziale
         }
     }
 
-    // override the onOptionsItemSelected()
-    // function to implement
-    // the item click listener callback
-    // to open and close the navigation
-    // drawer when the icon is clicked
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        final int nav_add_plant = R.id.nav_plant_add;
+
+        if (item.getItemId() == nav_add_plant) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit(); //setto il fragment iniziale
         }
-        return super.onOptionsItemSelected(item);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) { //se il menu laterale è aperto
+            drawerLayout.closeDrawer(GravityCompat.START); //lo chiudo
+        } else {
+            super.onBackPressed(); //altrimenti chiudo l'app
+        }
     }
 }
