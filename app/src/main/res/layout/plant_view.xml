@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="plant name"
+                android:text="@string/plant_name"
                 android:textSize="24sp" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="description"
+                android:text="@string/plant_description"
                 android:textSize="18sp" />
 
             <Button
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="Water"
+                android:text="@string/water_plant"
                 android:textSize="25sp" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="16dp"
-                android:text="Moisture Graph: "
+                android:text="@string/moisture_graph"
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="16dp"
-                android:text="Temperature Graph: "
+                android:text="@string/temperature_graph"
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="16dp"
-                android:text="Humidity Graph: "
+                android:text="@string/humidity_graph"
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="16dp"
-                android:text="Light Graph: "
+                android:text="@string/light_graph"
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView

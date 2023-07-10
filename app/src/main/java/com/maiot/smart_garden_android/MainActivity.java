@@ -22,19 +22,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //recupero la toolbar
-        setSupportActionBar(toolbar); //setto la toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this); //setto il listener per il menu laterale
+        navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close); //creo il toggle per aprire e chiudere il menu laterale
-        drawerLayout.addDrawerListener(toggle); //setto il listener per il menu laterale
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit(); //setto il fragment iniziale
-            navigationView.setCheckedItem(R.id.nav_plant_add); //setto il menu laterale iniziale
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_plant_add);
         }
     }
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final int nav_add_plant = R.id.nav_plant_add;
 
         if (item.getItemId() == nav_add_plant) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit(); //setto il fragment iniziale
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) { //se il menu laterale è aperto
-            drawerLayout.closeDrawer(GravityCompat.START); //lo chiudo
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed(); //altrimenti chiudo l'app
+            super.onBackPressed();
         }
     }
 }

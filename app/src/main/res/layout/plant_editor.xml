@@ -12,14 +12,14 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
         <Button
-            android:id="@+id/btnInserisciFoto"
+            android:id="@+id/btnInsertImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inserisci Foto"
+            android:text="@string/insert_image"
             android:layout_marginTop="20dp"/>
 
         <ImageView
-            android:id="@+id/ivFoto"
+            android:id="@+id/ivImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"/>
@@ -27,37 +27,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome pianta: "
+            android:text="@string/plant_name"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/etNomePianta"
+            android:id="@+id/etPlantName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:hint="Inserisci il nome della pianta"
+            android:hint="@string/insert_plant_name"
             android:minHeight="48dp"
             tools:ignore="DuplicateClickableBoundsCheck" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descrizione pianta: "
+            android:text="@string/plant_description"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/etDescrizionePianta"
+            android:id="@+id/etPlantDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:hint="Inserisci una desscrizione della pianta"
+            android:hint="@string/insert_plant_description"
             android:minHeight="48dp" />
 
         <Button
-            android:id="@+id/btnInserisciPianta"
+            android:id="@+id/btnAddPlant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inserisci pianta"
+            android:text="@string/add_plant"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
 

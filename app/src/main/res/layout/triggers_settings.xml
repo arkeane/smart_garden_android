@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="Trigger settings"
-        android:textSize="25dp"
+        android:text="@string/trigger_settings"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -23,15 +23,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Humidity" />
+            android:layout_marginStart="15dp"
+            android:text="@string/humidity" />
 
         <EditText
             android:id="@+id/etHumidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="301dp"
-            android:hint="50"
+            android:layout_marginStart="301dp"
+            android:hint="@string/hint_trigger_50"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
@@ -52,15 +52,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Temperature" />
+            android:layout_marginStart="15dp"
+            android:text="@string/temperature" />
 
         <EditText
             android:id="@+id/etTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="276dp"
-            android:hint="50"
+            android:layout_marginStart="276dp"
+            android:hint="@string/hint_trigger_50"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
@@ -81,15 +81,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Brightness" />
+            android:layout_marginStart="15dp"
+            android:text="@string/brightness" />
 
         <EditText
             android:id="@+id/etBrightness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="290dp"
-            android:hint="50"
+            android:layout_marginStart="290dp"
+            android:hint="@string/hint_trigger_50"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
@@ -110,15 +110,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Moisture" />
+            android:layout_marginStart="15dp"
+            android:text="@string/moisture" />
 
         <EditText
             android:id="@+id/etMoisture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="301dp"
-            android:hint="50"
+            android:layout_marginStart="301dp"
+            android:hint="@string/hint_trigger_50"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
@@ -135,7 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Update" />
+        android:text="@string/update" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -156,15 +156,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Enable" />
+                android:text="@string/enable" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="0.5"
-                android:text="Disable" />
+                android:text="@string/disable" />
         </LinearLayout>
 
     </RelativeLayout>

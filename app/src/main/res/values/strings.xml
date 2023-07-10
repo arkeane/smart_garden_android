@@ -2,4 +2,27 @@
     <string name="app_name">Smart Garden</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="insert_image">Insert image</string>
+    <string name="insert_plant_name">Insert plant name</string>
+    <string name="plant_description">Plant Description</string>
+    <string name="insert_plant_description">Insert plant description</string>
+    <string name="add_plant">Register plant</string>
+    <string name="plant_name">Plant name</string>
+    <string name="water_plant">Water</string>
+    <string name="moisture_graph">Moisture Graph</string>
+    <string name="temperature_graph">Temperature Graph</string>
+    <string name="humidity_graph">Humidity Graph</string>
+    <string name="light_graph">Light Graph</string>
+    <string name="smart_garden">Smart Garden</string>
+    <string name="plant_list">Plants list</string>
+    <string name="disable">Disable</string>
+    <string name="enable">Enable</string>
+    <string name="update">Update</string>
+    <string name="hint_trigger_50">50</string>
+    <string name="temperature">Temperature</string>
+    <string name="brightness">Brightness</string>
+    <string name="moisture">Moisture</string>
+    <string name="humidity">Humidity</string>
+    <string name="trigger_settings">Trigger settings</string>
+    <string name="logo">Logo</string>
 </resources>
