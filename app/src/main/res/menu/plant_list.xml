@@ -4,13 +4,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_plant_list"
-            android:title="@string/lista_piante" />
+            android:title="@string/plant_add" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_plant_add"
-            android:title="@string/aggiungi_pianta" />
+            android:title="@string/plant_list" />
     </group>
 
 </menu>

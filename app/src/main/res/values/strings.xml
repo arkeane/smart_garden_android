@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">smart_garden_android</string>
-    <string name="menu_Open">Open</string>
-    <string name="close_menu">Close</string>
-    <string name="lista_piante">Lista Piante</string>
-    <string name="aggiungi_pianta">Aggiungi Pianta</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="plant_list">Lista Piante</string>
+    <string name="plant_add">Aggiungi Pianta</string>
 </resources>
