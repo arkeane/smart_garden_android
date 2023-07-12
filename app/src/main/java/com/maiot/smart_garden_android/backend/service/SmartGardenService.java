@@ -1,8 +1,7 @@
-package com.maiot.smart_garden_android.backend;
+package com.maiot.smart_garden_android.backend.service;
 
-import com.maiot.smart_garden_android.backend.support.PlantAdd;
-import com.maiot.smart_garden_android.backend.support.PlantTriggers;
-import com.maiot.smart_garden_android.backend.support.PlantWater;
+import com.maiot.smart_garden_android.backend.Plant;
+import com.maiot.smart_garden_android.backend.PlantTriggers;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,17 +29,17 @@ public interface SmartGardenService {
     @GET("plants/{name}")
     Call<ResponseBody> getPlantData(@Path("name") String name);
 
-    @GET("plants/{name}/timespan?from={from_milliseconds}&to={to_milliseconds}")
+    @GET("plants/{name}/timespan")
     Call<ResponseBody> getPlantData(@Path("name") String name, @Query("from") long from_milliseconds, @Query("to") long to_milliseconds);
 
     @POST("plants/register")
-    Call<ResponseBody> registerPlant(@Body PlantAdd body);
+    Call<ResponseBody> registerPlant(@Body Plant body);
 
     @DELETE("plants/{name}")
     Call<ResponseBody> deletePlant(@Path("name") String name);
 
     @PUT("sensors/water")
-    Call<ResponseBody> waterPlant(@Body PlantWater name);
+    Call<ResponseBody> waterPlant(@Body Plant name);
 
     @PUT("sensors/trigger")
     Call<ResponseBody> triggerPlant(@Body PlantTriggers body);

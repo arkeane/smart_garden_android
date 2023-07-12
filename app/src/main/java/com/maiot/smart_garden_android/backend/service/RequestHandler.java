@@ -1,4 +1,4 @@
-package com.maiot.smart_garden_android.backend;
+package com.maiot.smart_garden_android.backend.service;
 
 import android.util.Log;
 
@@ -9,22 +9,22 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class RequestHandler implements Callable {
+public class RequestHandler<T> implements Callable {
 
-    private Call<ResponseBody> call;
-    private Response<ResponseBody> response;
+    private Call<T> call;
+    private Response<T> response;
 
-    public RequestHandler(Call<ResponseBody> call) {
+    public RequestHandler(Call<T> call) {
         this.call = call;
     }
 
     @Override
-    public Response<ResponseBody> call() {
+    public Response<T> call() {
         try {
             response = call.execute();
 
             return response;
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
