@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.maiot.smart_garden_android.R;
-import com.maiot.smart_garden_android.backend.ServerCaller;
-import com.maiot.smart_garden_android.backend.support.PlantAdd;
-import com.maiot.smart_garden_android.backend.SmartGardenService;
+import com.maiot.smart_garden_android.backend.Plant;
+import com.maiot.smart_garden_android.backend.service.ServerCaller;
+import com.maiot.smart_garden_android.backend.service.SmartGardenService;
 
 
 import java.io.IOException;
@@ -72,24 +72,23 @@ public class AddPlantFragment extends Fragment {
                 String plantName = etPlantName.getText().toString();
                 String plantDescription = etPlantDescription.getText().toString();
 
-                PlantAdd plant = new PlantAdd(plantName, plantDescription);
+                Plant plant = new Plant(plantName, plantDescription);
 
                 Call<ResponseBody> call = service.registerPlant(plant);
-                ServerCaller caller = new ServerCaller(call);
-                caller.call();
+                ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
+                try {
+                    caller.call();
+                } catch (Exception e) {
+                    caller.connError(AddPlantFragment.this);
+                    return;
+                }
                 Response<ResponseBody> response = caller.getResponse();
                 Integer responseCode = caller.getResponseCode();
-
-                try {
-                    Log.i("AddPlantFragment", "ResponseBody: " + response.body().string());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
 
                 switch (responseCode) {
                     case 201:
                         tvPlantCreated.setText("Plant created!");
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantViewFragment(plantName)).commit();
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantViewFragment(plantName)).commit();
                         return;
                     case 409:
                         tvPlantCreated.setText("Plant already exists!");

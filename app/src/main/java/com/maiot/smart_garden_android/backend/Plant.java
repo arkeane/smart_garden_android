@@ -11,20 +11,13 @@ import java.util.Locale;
 
 public class Plant implements java.io.Serializable{
     @SerializedName("data_set")
-    private ArrayList<SensorData> data_set = new ArrayList<>();
+    private ArrayList<SensorData> data_set;
     @SerializedName("name")
-    private String name;
+    private final String name;
     @SerializedName("type")
-    private String type;
+    private final String type;
     @SerializedName("planted")
     private Date planted;
-
-
-    public Plant(String name, String type, Date planted) {
-        this.name = name;
-        this.type = type;
-        this.planted = planted;
-    }
 
     public Plant(String json) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a", Locale.US);
@@ -39,38 +32,24 @@ public class Plant implements java.io.Serializable{
         this.data_set = plant.getData_set();
     }
 
-    @Override
-    public String toString() {
-        return "Plant{" +
-                "name='" + this.name + '\'' +
-                ", type='" + this.type + '\'' +
-                ", planted=" + this.planted +
-                ", data_set=" + this.data_set +
-                '}';
+    public Plant(String name, String type){
+        Gson gson = new GsonBuilder()
+                .create();
+        Plant plant = gson.fromJson("{\"name\":\"" + name + "\",\"type\":\"" + type + "\"}", Plant.class);
+        this.name = plant.getName();
+        this.type = plant.getType();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Date getPlanted() {
         return planted;
-    }
-
-    public void setPlanted(Date planted) {
-        this.planted = planted;
     }
 
     public ArrayList<SensorData> getData_set() {

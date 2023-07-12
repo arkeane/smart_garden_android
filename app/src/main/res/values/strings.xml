@@ -27,4 +27,6 @@
     <string name="logo">Logo</string>
     <string name="plant_created" />
     <string name="plant_date_planted">0 a.C</string>
+    <string name="conn_error">Connection Error Please make sure that you are connected to the same WiFi as the server and the plants then try again</string>
+    <string name="try_again">Try Again</string>
 </resources>

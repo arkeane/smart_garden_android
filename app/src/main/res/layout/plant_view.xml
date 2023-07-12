@@ -67,7 +67,7 @@
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphMoisture"
+                android:id="@+id/gvMoistureGraph"
                 android:layout_width="match_parent"
                 android:layout_height="150dip" />
 
@@ -81,7 +81,7 @@
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphTemperature"
+                android:id="@+id/gvTemperatureGraph"
                 android:layout_width="match_parent"
                 android:layout_height="150dip" />
 
@@ -95,7 +95,7 @@
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphHumidity"
+                android:id="@+id/gvHumidityGraph"
                 android:layout_width="match_parent"
                 android:layout_height="150dip" />
 
@@ -109,7 +109,7 @@
                 tools:ignore="RtlHardcoded" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphLight"
+                android:id="@+id/gvLightGraph"
                 android:layout_width="match_parent"
                 android:layout_height="150dip" />
         </androidx.appcompat.widget.LinearLayoutCompat>

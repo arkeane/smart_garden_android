@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.maiot.smart_garden_android.R;
-import com.maiot.smart_garden_android.backend.ServerCaller;
-import com.maiot.smart_garden_android.backend.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.ServerCaller;
+import com.maiot.smart_garden_android.backend.service.SmartGardenService;
 
 import java.io.IOException;
 
@@ -40,7 +40,6 @@ public class PlantListFragment extends Fragment {
         tvPlantListTitle = getView().findViewById(R.id.tvPlantListTitle);
         lvPlantsList = getView().findViewById(R.id.lvPlantsList);
 
-
         String url = "http://10.10.10.112:4567/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -48,10 +47,16 @@ public class PlantListFragment extends Fragment {
                 .build();
 
         Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getAllPlantsNames();
-        ServerCaller caller = new ServerCaller(call);
-        caller.call();
+        ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
+        try {
+            caller.call();
+        } catch (Exception e) {
+            caller.connError(this);
+            return;
+        }
+
         Response<ResponseBody> response = caller.getResponse();
-        Integer responseCode = response.code();
+        int responseCode = response.code();
 
 
         if (responseCode == 200) {
@@ -73,12 +78,12 @@ public class PlantListFragment extends Fragment {
         } else if (responseCode >= 500) {
             tvPlantListTitle.setText("Server error");
         } else {
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
         }
 
         lvPlantsList.setOnItemClickListener((p1, p2, i, p4) -> {
             String plantName = (String) lvPlantsList.getItemAtPosition(i);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantViewFragment(plantName)).commit();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantViewFragment(plantName)).commit();
         });
     }
 }
