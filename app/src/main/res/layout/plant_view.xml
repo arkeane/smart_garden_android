@@ -25,7 +25,7 @@
                 android:importantForAccessibility="no" />
 
             <TextView
-                android:id="@+id/plant_name"
+                android:id="@+id/tvPlantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -33,11 +33,19 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/plant_description"
+                android:id="@+id/tvPlantDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/plant_description"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvPlantCreated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/plant_date_planted"
                 android:textSize="18sp" />
 
             <Button

@@ -25,4 +25,6 @@
     <string name="humidity">Humidity</string>
     <string name="trigger_settings">Trigger settings</string>
     <string name="logo">Logo</string>
+    <string name="plant_created" />
+    <string name="plant_date_planted">0 a.C</string>
 </resources>

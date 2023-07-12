@@ -1,17 +1,14 @@
-package com.maiot.smart_garden_android.backend;
+package com.maiot.smart_garden_android.backend.support;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Plant implements java.io.Serializable{
-    @SerializedName("data_set")
-    private ArrayList<SensorData> data_set = new ArrayList<>();
+public class PlantInfo implements java.io.Serializable {
     @SerializedName("name")
     private String name;
     @SerializedName("type")
@@ -20,23 +17,22 @@ public class Plant implements java.io.Serializable{
     private Date planted;
 
 
-    public Plant(String name, String type, Date planted) {
+    public PlantInfo(String name, String type, Date planted) {
         this.name = name;
         this.type = type;
         this.planted = planted;
     }
 
-    public Plant(String json) {
+    public PlantInfo(String json) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a", Locale.US);
 
         Gson gson = new GsonBuilder()
                 .setDateFormat(dateFormat.toPattern())
                 .create();
-        Plant plant = gson.fromJson(json, Plant.class);
+        PlantInfo plant = gson.fromJson(json, PlantInfo.class);
         this.name = plant.getName();
         this.type = plant.getType();
         this.planted = plant.getPlanted();
-        this.data_set = plant.getData_set();
     }
 
     @Override
@@ -45,7 +41,6 @@ public class Plant implements java.io.Serializable{
                 "name='" + this.name + '\'' +
                 ", type='" + this.type + '\'' +
                 ", planted=" + this.planted +
-                ", data_set=" + this.data_set +
                 '}';
     }
 
@@ -71,9 +66,5 @@ public class Plant implements java.io.Serializable{
 
     public void setPlanted(Date planted) {
         this.planted = planted;
-    }
-
-    public ArrayList<SensorData> getData_set() {
-        return data_set;
     }
 }

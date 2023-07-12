@@ -4,6 +4,7 @@ import com.maiot.smart_garden_android.backend.support.PlantAdd;
 import com.maiot.smart_garden_android.backend.support.PlantTriggers;
 import com.maiot.smart_garden_android.backend.support.PlantWater;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -15,26 +16,32 @@ import retrofit2.http.Query;
 
 public interface SmartGardenService {
     @GET("plants/info")
-    Call<String> getAllPlantsInfo();
+    Call<ResponseBody> getAllPlantsInfo();
+
+    @GET("plants/names")
+    Call<ResponseBody> getAllPlantsNames();
 
     @GET("plants/all")
-    Call<String> getAllPlantsData();
+    Call<ResponseBody> getAllPlantsData();
+
+    @GET("plants/{name}/info")
+    Call<ResponseBody> getPlantInfo(@Path("name") String name);
 
     @GET("plants/{name}")
-    Call<String> getPlantData(@Path("name") String name);
+    Call<ResponseBody> getPlantData(@Path("name") String name);
 
     @GET("plants/{name}/timespan?from={from_milliseconds}&to={to_milliseconds}")
-    Call<String> getPlantData(@Path("name") String name, @Query("from") long from_milliseconds, @Query("to")long to_milliseconds);
+    Call<ResponseBody> getPlantData(@Path("name") String name, @Query("from") long from_milliseconds, @Query("to") long to_milliseconds);
 
     @POST("plants/register")
-    Call<String> registerPlant(@Body PlantAdd body);
+    Call<ResponseBody> registerPlant(@Body PlantAdd body);
 
     @DELETE("plants/{name}")
-    Call<String> deletePlant(@Path("name") String name);
+    Call<ResponseBody> deletePlant(@Path("name") String name);
 
     @PUT("sensors/water")
-    Call<String> waterPlant(@Body PlantWater name);
+    Call<ResponseBody> waterPlant(@Body PlantWater name);
 
     @PUT("sensors/trigger")
-    Call<String> triggerPlant(@Body PlantTriggers body);
+    Call<ResponseBody> triggerPlant(@Body PlantTriggers body);
 }
