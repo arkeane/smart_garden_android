@@ -9,10 +9,10 @@
     <string name="add_plant">Register plant</string>
     <string name="plant_name">Plant name</string>
     <string name="water_plant">Water</string>
-    <string name="moisture_graph">Moisture Graph</string>
-    <string name="temperature_graph">Temperature Graph</string>
-    <string name="humidity_graph">Humidity Graph</string>
-    <string name="light_graph">Light Graph</string>
+    <string name="moisture_graph">Moisture</string>
+    <string name="temperature_graph">Temperature</string>
+    <string name="humidity_graph">Humidity</string>
+    <string name="light_graph">Light</string>
     <string name="smart_garden">Smart Garden</string>
     <string name="plant_list">Plants list</string>
     <string name="disable">Disable</string>

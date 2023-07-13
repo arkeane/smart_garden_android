@@ -1,18 +1,23 @@
 package com.maiot.smart_garden_android.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.maiot.smart_garden_android.R;
@@ -43,6 +48,8 @@ public class PlantViewFragment extends Fragment {
     private GraphView temperatureGraph;
     private GraphView humidityGraph;
     private GraphView lightGraph;
+
+    private Button btnWater;
 
     public PlantViewFragment(String name) {
         this.name = name;
@@ -81,6 +88,49 @@ public class PlantViewFragment extends Fragment {
         return json;
     }
 
+    public void setGraph(GraphView graph, SensorData[] sensorData, String graphTitle) {
+        SimpleDateFormat dateFormatGraph = new SimpleDateFormat("HH:mm", Locale.US);
+        graph.removeAllSeries();
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+        series.setDrawDataPoints(true);
+        series.setColor(getResources().getColor(R.color.nord14));
+        series.setDataPointsRadius(10);
+        series.setThickness(8);
+        for (SensorData sensorDatum : sensorData) {
+            Date timestamp = sensorDatum.getDate();
+            double data = 0.0;
+            switch (graphTitle){
+                case "Moisture":
+                    data = sensorDatum.getMoisture();
+                    break;
+                case "Temperature":
+                    data = sensorDatum.getTemperature();
+                    break;
+                case "Humidity":
+                    data = sensorDatum.getHumidity();
+                    break;
+                case "Light":
+                    data = sensorDatum.getLight();
+                    break;
+            }
+
+            series.appendData(new DataPoint(timestamp, data), true, 100);
+        }
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    // show normal x values
+                    return dateFormatGraph.format(new Date((long) value));
+                } else {
+                    return String.valueOf((int) value);
+                }
+            }
+        });
+        graph.setTitle(graphTitle);
+        graph.addSeries(series);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -93,6 +143,8 @@ public class PlantViewFragment extends Fragment {
         temperatureGraph = requireView().findViewById(R.id.gvTemperatureGraph);
         humidityGraph = requireView().findViewById(R.id.gvHumidityGraph);
         lightGraph = requireView().findViewById(R.id.gvLightGraph);
+
+        btnWater = requireView().findViewById(R.id.btnWater);
 
         String url = "http://10.10.10.112:4567/";
         Retrofit retrofit = new Retrofit.Builder()
@@ -137,25 +189,45 @@ public class PlantViewFragment extends Fragment {
                     .create();
             sensorData = gson.fromJson(data, SensorData[].class);
 
-            moistureGraph.removeAllSeries();
-            LineGraphSeries<DataPoint> moisture_series = new LineGraphSeries<>();
-            moisture_series.setDrawDataPoints(true);
-            moisture_series.setColor(getResources().getColor(R.color.nord14));
-            moisture_series.setDataPointsRadius(10);
-            moisture_series.setThickness(8);
-            for (SensorData sensorDatum : sensorData) {
-                Date timestamp = sensorDatum.getDate();
-                Float moisture = sensorDatum.getMoisture();
-                moisture_series.appendData(new DataPoint(timestamp, moisture), true, 100);
-            }
-            moistureGraph.addSeries(moisture_series);
-
-
+            setGraph(moistureGraph, sensorData, "Moisture");
+            setGraph(temperatureGraph, sensorData, "Temperature");
+            setGraph(humidityGraph, sensorData, "Humidity");
+            setGraph(lightGraph, sensorData, "Light");
         } else {
             tvPlantName.setText("Error");
             tvPlantDescription.setText("Error");
             tvPlantCreated.setText("Error");
         }
 
+        // on click listener for the water button
+        btnWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResponseBody> call = retrofit.create(SmartGardenService.class).waterPlant(name);
+                ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
+                try {
+                    caller.call();
+                } catch (Exception e) {
+                    caller.connError(PlantViewFragment.this);
+                    return;
+                }
+                Response<ResponseBody> response = caller.getResponse();
+                Integer responseCode = caller.getResponseCode();
+
+                if (responseCode == 200) {
+                    btnWater.setText("Watering...");
+                    btnWater.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnWater.setText("Water");
+                            btnWater.setEnabled(true);
+                        }
+                    }, 30000);
+                } else {
+                    Toast.makeText(getContext(), "Error watering plant", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

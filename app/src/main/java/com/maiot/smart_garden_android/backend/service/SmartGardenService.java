@@ -39,7 +39,7 @@ public interface SmartGardenService {
     Call<ResponseBody> deletePlant(@Path("name") String name);
 
     @PUT("sensors/water")
-    Call<ResponseBody> waterPlant(@Body Plant name);
+    Call<ResponseBody> waterPlant(@Body String name);
 
     @PUT("sensors/trigger")
     Call<ResponseBody> triggerPlant(@Body PlantTriggers body);
