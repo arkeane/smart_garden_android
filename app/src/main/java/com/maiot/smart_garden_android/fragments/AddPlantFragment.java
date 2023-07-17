@@ -26,7 +26,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddPlantFragment extends Fragment {
-    private Button btnInsertImage;
     private Button btnAddPlant;
 
     private EditText etPlantName;
@@ -42,8 +41,6 @@ public class AddPlantFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        btnInsertImage = getView().findViewById(R.id.btnInsertImage);
         btnAddPlant = getView().findViewById(R.id.btnAddPlant);
 
         etPlantName = getView().findViewById(R.id.etPlantName);
@@ -51,20 +48,13 @@ public class AddPlantFragment extends Fragment {
 
         tvPlantCreated = getView().findViewById(R.id.tvPlantCreated);
 
-        String url = "http://10.10.10.112:4567/";
+        String url = getString(R.string.server);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         SmartGardenService service = retrofit.create(SmartGardenService.class);
-
-        btnInsertImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btnAddPlant.setOnClickListener(new View.OnClickListener() {
             @Override

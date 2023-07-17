@@ -5,25 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".fragments.TriggerFragment">
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/baseline_arrow_back_24">
+    </ImageButton>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
             android:text="@string/trigger_settings"
             android:textSize="25sp"
             android:textStyle="bold" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,28 +39,34 @@
                 android:layout_marginStart="15dp"
                 android:text="@string/humidity" />
 
-            <EditText
-                android:id="@+id/etHumidity"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="301dp"
-                android:hint="@string/hint_trigger_50"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/sliderHumidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:max="100"
+                    android:progress="50" />
+
+                <EditText
+                    android:id="@+id/etHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/hint_trigger_50"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/sliderHumidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:max="100"
-            android:progress="50" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,28 +74,33 @@
                 android:layout_marginStart="15dp"
                 android:text="@string/temperature" />
 
-            <EditText
-                android:id="@+id/etTemperature"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="276dp"
-                android:hint="@string/hint_trigger_50"
-                tools:ignore="TouchTargetSizeCheck" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <SeekBar
-            android:id="@+id/sliderTemperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:max="100"
-            android:progress="50" />
+                <SeekBar
+                    android:id="@+id/sliderTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:max="100"
+                    android:progress="50" />
+
+                <EditText
+                    android:id="@+id/etTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/hint_trigger_50"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,28 +108,33 @@
                 android:layout_marginStart="15dp"
                 android:text="@string/brightness" />
 
-            <EditText
-                android:id="@+id/etBrightness"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="290dp"
-                android:hint="@string/hint_trigger_50"
-                tools:ignore="TouchTargetSizeCheck" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <SeekBar
-            android:id="@+id/sliderBrightness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:max="100"
-            android:progress="50" />
+                <SeekBar
+                    android:id="@+id/sliderBrightness"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:max="1023"
+                    android:progress="50" />
+
+                <EditText
+                    android:id="@+id/etBrightness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/hint_trigger_50"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,29 +142,29 @@
                 android:layout_marginStart="15dp"
                 android:text="@string/moisture" />
 
-            <EditText
-                android:id="@+id/etMoisture"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="301dp"
-                android:hint="@string/hint_trigger_50"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/sliderMoisture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:max="1023"
+                    android:progress="50" />
+
+                <EditText
+                    android:id="@+id/etMoisture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/hint_trigger_50"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/sliderMoisture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:max="100"
-            android:progress="50" />
-
-        <Button
-            android:id="@+id/btnUpdateTrigger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/update" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -157,14 +181,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnEnableTrigger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/enable" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnDisableTrigger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -173,6 +197,14 @@
             </LinearLayout>
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnUpdateTrigger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/update" />
     </LinearLayout>
 
 

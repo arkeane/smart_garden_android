@@ -1,7 +1,7 @@
 package com.maiot.smart_garden_android.backend.service;
 
 import com.maiot.smart_garden_android.backend.Plant;
-import com.maiot.smart_garden_android.backend.PlantTriggers;
+import com.maiot.smart_garden_android.backend.PlantTrigger;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,6 +29,9 @@ public interface SmartGardenService {
     @GET("plants/{name}")
     Call<ResponseBody> getPlantData(@Path("name") String name);
 
+    @GET("sensors/triggers/{name}")
+    Call<ResponseBody> getPlantTriggers(@Path("name") String name);
+
     @GET("plants/{name}/timespan")
     Call<ResponseBody> getPlantData(@Path("name") String name, @Query("from") long from_milliseconds, @Query("to") long to_milliseconds);
 
@@ -41,6 +44,9 @@ public interface SmartGardenService {
     @PUT("sensors/water")
     Call<ResponseBody> waterPlant(@Body String name);
 
-    @PUT("sensors/trigger")
-    Call<ResponseBody> triggerPlant(@Body PlantTriggers body);
+    @PUT("sensors/triggers")
+    Call<ResponseBody> triggerPlant(@Body PlantTrigger body);
+
+    @GET("avatar/{name}")
+    Call<ResponseBody> getAvatar(@Path("name") String name, @Query("s") int size, @Query("d") String type);
 }

@@ -40,7 +40,7 @@ public class PlantListFragment extends Fragment {
         tvPlantListTitle = getView().findViewById(R.id.tvPlantListTitle);
         lvPlantsList = getView().findViewById(R.id.lvPlantsList);
 
-        String url = "http://10.10.10.112:4567/";
+        String url = getString(R.string.server);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,7 +58,6 @@ public class PlantListFragment extends Fragment {
         Response<ResponseBody> response = caller.getResponse();
         int responseCode = response.code();
 
-
         if (responseCode == 200) {
             String[] plants;
             String json;
@@ -74,7 +73,9 @@ public class PlantListFragment extends Fragment {
             java.util.Arrays.sort(plants);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.item_plant_list, R.id.tvItemPlantName, plants);
+
             lvPlantsList.setAdapter(adapter);
+
         } else if (responseCode >= 500) {
             tvPlantListTitle.setText("Server error");
         } else {

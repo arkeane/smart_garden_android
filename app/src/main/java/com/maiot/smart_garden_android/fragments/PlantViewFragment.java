@@ -1,5 +1,7 @@
 package com.maiot.smart_garden_android.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,16 +20,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.maiot.smart_garden_android.R;
 import com.maiot.smart_garden_android.backend.Plant;
 import com.maiot.smart_garden_android.backend.SensorData;
+import com.maiot.smart_garden_android.backend.service.Gravatar;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
 import com.maiot.smart_garden_android.backend.service.SmartGardenService;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -40,9 +50,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PlantViewFragment extends Fragment {
     private final String name;
 
+    private ImageView ivPlantImage;
+
     private TextView tvPlantName;
     private TextView tvPlantDescription;
     private TextView tvPlantCreated;
+    private TextView tvMoisture;
+    private TextView tvTemperature;
+    private TextView tvHumidity;
+    private TextView tvLight;
 
     private GraphView moistureGraph;
     private GraphView temperatureGraph;
@@ -50,6 +66,7 @@ public class PlantViewFragment extends Fragment {
     private GraphView lightGraph;
 
     private Button btnWater;
+    private Button btnTriggers;
 
     public PlantViewFragment(String name) {
         this.name = name;
@@ -86,6 +103,36 @@ public class PlantViewFragment extends Fragment {
         }
 
         return json;
+    }
+
+    public void setTvWithLatestData(SensorData[] sensorData, TextView tv, String dataType){
+
+        // if sensorData is empty, return
+        if (sensorData.length == 0) {
+            return;
+        }
+        // Get latest data from sensorData based on timestamp
+        SensorData latestData = sensorData[0];
+        for (SensorData sensorDatum : sensorData) {
+            if (sensorDatum.getDate().after(latestData.getDate())) {
+                latestData = sensorDatum;
+            }
+        }
+
+        switch (dataType){
+            case "Moisture":
+                tv.setText(String.format(Locale.US, "M: %d", (int) latestData.getMoisture()));
+                break;
+            case "Temperature":
+                tv.setText(String.format(Locale.US, "T: %d°C", (int) latestData.getTemperature()));
+                break;
+            case "Humidity":
+                tv.setText(String.format(Locale.US, "H: %d%%", (int) latestData.getHumidity()));
+                break;
+            case "Light":
+                tv.setText(String.format(Locale.US, "L: %d", (int) latestData.getLight()));
+                break;
+        }
     }
 
     public void setGraph(GraphView graph, SensorData[] sensorData, String graphTitle) {
@@ -127,6 +174,8 @@ public class PlantViewFragment extends Fragment {
                 }
             }
         });
+        graph.getGridLabelRenderer().setNumHorizontalLabels(12);
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(120);
         graph.setTitle(graphTitle);
         graph.addSeries(series);
     }
@@ -135,9 +184,15 @@ public class PlantViewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ivPlantImage = requireView().findViewById(R.id.ivPlantImage);
+
         tvPlantName = requireView().findViewById(R.id.tvPlantName);
         tvPlantDescription = requireView().findViewById(R.id.tvPlantDescription);
         tvPlantCreated = requireView().findViewById(R.id.tvPlantCreated);
+        tvMoisture = requireView().findViewById(R.id.tvMoisture);
+        tvTemperature = requireView().findViewById(R.id.tvTemperature);
+        tvHumidity = requireView().findViewById(R.id.tvHumidity);
+        tvLight = requireView().findViewById(R.id.tvLight);
 
         moistureGraph = requireView().findViewById(R.id.gvMoistureGraph);
         temperatureGraph = requireView().findViewById(R.id.gvTemperatureGraph);
@@ -145,8 +200,9 @@ public class PlantViewFragment extends Fragment {
         lightGraph = requireView().findViewById(R.id.gvLightGraph);
 
         btnWater = requireView().findViewById(R.id.btnWater);
+        btnTriggers = requireView().findViewById(R.id.btnTriggers);
 
-        String url = "http://10.10.10.112:4567/";
+        String url = getString(R.string.server);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -166,6 +222,11 @@ public class PlantViewFragment extends Fragment {
         if (responseCode == 200) {
             tvPlantName.setText(this.name);
 
+            Gravatar gravatar = new Gravatar("robohash", 200);
+            Bitmap avatar = gravatar.getAvatar(this.name);
+            if (avatar != null) {
+                ivPlantImage.setImageBitmap(avatar);
+            }
             String json = null;
             try {
                 json = response.body().string();
@@ -188,6 +249,11 @@ public class PlantViewFragment extends Fragment {
                     .setDateFormat(dateFormat.toPattern())
                     .create();
             sensorData = gson.fromJson(data, SensorData[].class);
+
+            setTvWithLatestData(sensorData, tvMoisture, "Moisture");
+            setTvWithLatestData(sensorData, tvTemperature, "Temperature");
+            setTvWithLatestData(sensorData, tvHumidity, "Humidity");
+            setTvWithLatestData(sensorData, tvLight, "Light");
 
             setGraph(moistureGraph, sensorData, "Moisture");
             setGraph(temperatureGraph, sensorData, "Temperature");
@@ -215,18 +281,24 @@ public class PlantViewFragment extends Fragment {
                 Integer responseCode = caller.getResponseCode();
 
                 if (responseCode == 200) {
-                    btnWater.setText("Watering...");
+                    Toast.makeText(getContext(), "Watering plant for 30 seconds", Toast.LENGTH_LONG).show();
                     btnWater.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            btnWater.setText("Water");
                             btnWater.setEnabled(true);
                         }
                     }, 30000);
                 } else {
                     Toast.makeText(getContext(), "Error watering plant", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnTriggers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TriggerFragment(name)).commit();
             }
         });
     }

@@ -47,5 +47,4 @@ public class ServerCaller<T> {
     public Response<T> getResponse() {
         return response;
     }
-
 }
