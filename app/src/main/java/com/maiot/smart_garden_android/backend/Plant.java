@@ -1,40 +1,58 @@
 package com.maiot.smart_garden_android.backend;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
-public class Plant {
-    public static String name;
-    public static String type;
-    public static Date planted;
-    public static SensorData data_set;
+public class Plant implements java.io.Serializable{
+    @SerializedName("data_set")
+    private ArrayList<SensorData> data_set;
+    @SerializedName("name")
+    private final String name;
+    @SerializedName("type")
+    private final String type;
+    @SerializedName("planted")
+    private Date planted;
 
     public Plant(String json) {
-        new Gson().fromJson(json, Plant.class);
-        try {
-            this.name = Plant.getName();
-            this.type = Plant.getType();
-            this.planted = Plant.getPlanted();
-            this.data_set = Plant.getData_set();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid JSON string.");
-        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a", Locale.US);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat(dateFormat.toPattern())
+                .create();
+        Plant plant = gson.fromJson(json, Plant.class);
+        this.name = plant.getName();
+        this.type = plant.getType();
+        this.planted = plant.getPlanted();
+        this.data_set = plant.getData_set();
     }
 
-    private static SensorData getData_set() {
-        return data_set;
+    public Plant(String name, String type){
+        Gson gson = new GsonBuilder()
+                .create();
+        Plant plant = gson.fromJson("{\"name\":\"" + name + "\",\"type\":\"" + type + "\"}", Plant.class);
+        this.name = plant.getName();
+        this.type = plant.getType();
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static String getType() {
+    public String getType() {
         return type;
     }
 
-    public static Date getPlanted() {
+    public Date getPlanted() {
         return planted;
+    }
+
+    public ArrayList<SensorData> getData_set() {
+        return data_set;
     }
 }

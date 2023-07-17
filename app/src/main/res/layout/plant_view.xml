@@ -14,18 +14,19 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/plant_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:importantForAccessibility="no" />
+                android:id="@+id/ivPlantImage"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/baseline_filter_vintage_24"/>
 
             <TextView
-                android:id="@+id/plant_name"
+                android:id="@+id/tvPlantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -33,77 +34,117 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/plant_description"
+                android:id="@+id/tvPlantDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/plant_description"
                 android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/btnWater"
+            <TextView
+                android:id="@+id/tvPlantCreated"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/plant_date_planted"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/water_plant"
-                android:textSize="25sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvMoisture"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnWater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0.5"
+                        android:text="@string/water_plant" />
+
+                    <Button
+                        android:id="@+id/btnTriggers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0.5"
+                        android:text="@string/trigger_plant" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
-                android:text="@string/moisture_graph"
-                tools:ignore="RtlHardcoded" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvMoisture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphMoisture"
+                android:id="@+id/gvMoistureGraph"
                 android:layout_width="match_parent"
-                android:layout_height="150dip" />
-
-            <TextView
-                android:id="@+id/tvTemperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
-                android:text="@string/temperature_graph"
-                tools:ignore="RtlHardcoded" />
+                android:layout_height="150dip"
+                android:layout_marginTop="16dp" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphTemperature"
+                android:id="@+id/gvTemperatureGraph"
                 android:layout_width="match_parent"
-                android:layout_height="150dip" />
-
-            <TextView
-                android:id="@+id/tvHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
-                android:text="@string/humidity_graph"
-                tools:ignore="RtlHardcoded" />
+                android:layout_height="150dip"
+                android:layout_marginTop="16dp" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphHumidity"
+                android:id="@+id/gvHumidityGraph"
                 android:layout_width="match_parent"
-                android:layout_height="150dip" />
-
-            <TextView
-                android:id="@+id/tvLight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
-                android:text="@string/light_graph"
-                tools:ignore="RtlHardcoded" />
+                android:layout_height="150dip"
+                android:layout_marginTop="16dp" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphLight"
+                android:id="@+id/gvLightGraph"
                 android:layout_width="match_parent"
-                android:layout_height="150dip" />
+                android:layout_height="150dip"
+                android:layout_marginTop="16dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

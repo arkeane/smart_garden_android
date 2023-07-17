@@ -9,10 +9,10 @@
     <string name="add_plant">Register plant</string>
     <string name="plant_name">Plant name</string>
     <string name="water_plant">Water</string>
-    <string name="moisture_graph">Moisture Graph</string>
-    <string name="temperature_graph">Temperature Graph</string>
-    <string name="humidity_graph">Humidity Graph</string>
-    <string name="light_graph">Light Graph</string>
+    <string name="moisture_graph">Moisture</string>
+    <string name="temperature_graph">Temperature</string>
+    <string name="humidity_graph">Humidity</string>
+    <string name="light_graph">Light</string>
     <string name="smart_garden">Smart Garden</string>
     <string name="plant_list">Plants list</string>
     <string name="disable">Disable</string>
@@ -25,4 +25,10 @@
     <string name="humidity">Humidity</string>
     <string name="trigger_settings">Trigger settings</string>
     <string name="logo">Logo</string>
+    <string name="plant_created" />
+    <string name="plant_date_planted">0 a.C</string>
+    <string name="conn_error">Connection Error Please make sure that you are connected to the same WiFi as the server and the plants then try again</string>
+    <string name="try_again">Try Again</string>
+    <string name="trigger_plant">Triggers</string>
+    <string name="server">http://10.10.10.2:4567/</string>
 </resources>

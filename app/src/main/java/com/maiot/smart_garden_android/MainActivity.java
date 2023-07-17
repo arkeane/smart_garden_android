@@ -1,5 +1,8 @@
 package com.maiot.smart_garden_android;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,11 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import com.google.android.material.navigation.NavigationView;
 import com.maiot.smart_garden_android.fragments.AddPlantFragment;
+import com.maiot.smart_garden_android.fragments.PlantListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_plant_add);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantListFragment()).commit();
+            navigationView.setCheckedItem(R.id.plant_list_fragment);
         }
     }
 
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (item.getItemId() == nav_add_plant) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPlantFragment()).commit();
+        } else if (item.getItemId() == R.id.nav_plant_list) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantListFragment()).commit();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
