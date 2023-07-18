@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Plant implements java.io.Serializable{
-    @SerializedName("data_set")
-    private ArrayList<SensorData> data_set;
+public class Plant implements java.io.Serializable {
     @SerializedName("name")
     private final String name;
     @SerializedName("type")
     private final String type;
+    @SerializedName("data_set")
+    private ArrayList<SensorData> data_set;
     @SerializedName("planted")
     private Date planted;
 
@@ -32,7 +32,7 @@ public class Plant implements java.io.Serializable{
         this.data_set = plant.getData_set();
     }
 
-    public Plant(String name, String type){
+    public Plant(String name, String type) {
         Gson gson = new GsonBuilder()
                 .create();
         Plant plant = gson.fromJson("{\"name\":\"" + name + "\",\"type\":\"" + type + "\"}", Plant.class);

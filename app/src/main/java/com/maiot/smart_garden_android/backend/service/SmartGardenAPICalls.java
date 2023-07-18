@@ -13,7 +13,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface SmartGardenService {
+public interface SmartGardenAPICalls {
     @GET("plants/info")
     Call<ResponseBody> getAllPlantsInfo();
 

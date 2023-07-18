@@ -1,7 +1,6 @@
 package com.maiot.smart_garden_android.fragments;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.Viewport;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.maiot.smart_garden_android.R;
@@ -29,14 +27,9 @@ import com.maiot.smart_garden_android.backend.Plant;
 import com.maiot.smart_garden_android.backend.SensorData;
 import com.maiot.smart_garden_android.backend.service.Gravatar;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
-
-import org.w3c.dom.Text;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -65,6 +58,7 @@ public class PlantViewFragment extends Fragment {
     private GraphView humidityGraph;
     private GraphView lightGraph;
 
+    private ImageButton btnBack;
     private Button btnWater;
     private Button btnTriggers;
 
@@ -80,7 +74,7 @@ public class PlantViewFragment extends Fragment {
     public String getData(retrofit2.Retrofit retrofit) {
         long to = System.currentTimeMillis();
         long from = to - 1000 * 60 * 60 * 12;
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantData(this.name, from, to);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantData(this.name, from, to);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -105,7 +99,7 @@ public class PlantViewFragment extends Fragment {
         return json;
     }
 
-    public void setTvWithLatestData(SensorData[] sensorData, TextView tv, String dataType){
+    public void setTvWithLatestData(SensorData[] sensorData, TextView tv, String dataType) {
 
         // if sensorData is empty, return
         if (sensorData.length == 0) {
@@ -119,7 +113,7 @@ public class PlantViewFragment extends Fragment {
             }
         }
 
-        switch (dataType){
+        switch (dataType) {
             case "Moisture":
                 tv.setText(String.format(Locale.US, "M: %d", (int) latestData.getMoisture()));
                 break;
@@ -146,7 +140,7 @@ public class PlantViewFragment extends Fragment {
         for (SensorData sensorDatum : sensorData) {
             Date timestamp = sensorDatum.getDate();
             double data = 0.0;
-            switch (graphTitle){
+            switch (graphTitle) {
                 case "Moisture":
                     data = sensorDatum.getMoisture();
                     break;
@@ -199,6 +193,7 @@ public class PlantViewFragment extends Fragment {
         humidityGraph = requireView().findViewById(R.id.gvHumidityGraph);
         lightGraph = requireView().findViewById(R.id.gvLightGraph);
 
+        btnBack = requireView().findViewById(R.id.btnBackList);
         btnWater = requireView().findViewById(R.id.btnWater);
         btnTriggers = requireView().findViewById(R.id.btnTriggers);
 
@@ -208,7 +203,7 @@ public class PlantViewFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantInfo(this.name);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantInfo(this.name);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -269,7 +264,7 @@ public class PlantViewFragment extends Fragment {
         btnWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ResponseBody> call = retrofit.create(SmartGardenService.class).waterPlant(name);
+                Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).waterPlant(name);
                 ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
                 try {
                     caller.call();
@@ -299,6 +294,13 @@ public class PlantViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TriggerFragment(name)).commit();
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantListFragment()).commit();
             }
         });
     }

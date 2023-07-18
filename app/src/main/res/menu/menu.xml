@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ShowIn = "Navigation_view">
+    tools:ShowIn="Navigation_view">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_plant_add"
-            android:title="@string/add_plant"
-
-            android:icon="@drawable/baseline_add_circle_24"/>
+            android:icon="@drawable/baseline_add_circle_24"
+            android:title="@string/add_plant" />
         <item
             android:id="@+id/nav_plant_list"
-            android:title="@string/plant_list"
-            android:icon="@drawable/baseline_menu_24"/>
+            android:icon="@drawable/baseline_menu_24"
+            android:title="@string/plant_list" />
     </group>
 
 </menu>

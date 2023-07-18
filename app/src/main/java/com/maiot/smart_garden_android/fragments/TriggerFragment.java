@@ -1,6 +1,5 @@
 package com.maiot.smart_garden_android.fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.maiot.smart_garden_android.R;
 import com.maiot.smart_garden_android.backend.PlantTrigger;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import java.io.IOException;
 
@@ -44,6 +43,7 @@ public class TriggerFragment extends Fragment {
     private Button buttonEnable;
     private Button buttonDisable;
     private ImageButton buttonBack;
+
     public TriggerFragment(String name) {
         this.name = name;
     }
@@ -103,7 +103,7 @@ public class TriggerFragment extends Fragment {
         buttonUpdate = view.findViewById(R.id.btnUpdateTrigger);
         buttonEnable = view.findViewById(R.id.btnEnableTrigger);
         buttonDisable = view.findViewById(R.id.btnDisableTrigger);
-        buttonBack = view.findViewById(R.id.btnBack);
+        buttonBack = view.findViewById(R.id.btnBackView);
 
         bindSbToEt(seekbarHumidity, editTextHumidity);
         bindSbToEt(seekbarTemperature, editTextTemperature);
@@ -116,7 +116,7 @@ public class TriggerFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantTriggers(name);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantTriggers(name);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -149,7 +149,7 @@ public class TriggerFragment extends Fragment {
         int light_trigger = plantTrigger.getLight().intValue();
         int moisture_trigger = plantTrigger.getMoisture().intValue();
 
-        if(enabled) {
+        if (enabled) {
             buttonEnable.setEnabled(false);
             buttonDisable.setEnabled(true);
         } else {
@@ -205,7 +205,7 @@ public class TriggerFragment extends Fragment {
 
                 Log.i("TriggerFragment", plantTrigger.toJson());
 
-                Call<ResponseBody> call = retrofit.create(SmartGardenService.class).triggerPlant(plantTrigger);
+                Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).triggerPlant(plantTrigger);
                 ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
                 try {
                     caller.call();
