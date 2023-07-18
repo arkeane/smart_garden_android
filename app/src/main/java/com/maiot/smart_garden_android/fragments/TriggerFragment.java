@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.maiot.smart_garden_android.R;
 import com.maiot.smart_garden_android.backend.PlantTrigger;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import java.io.IOException;
 
@@ -116,7 +116,7 @@ public class TriggerFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantTriggers(name);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantTriggers(name);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -205,7 +205,7 @@ public class TriggerFragment extends Fragment {
 
                 Log.i("TriggerFragment", plantTrigger.toJson());
 
-                Call<ResponseBody> call = retrofit.create(SmartGardenService.class).triggerPlant(plantTrigger);
+                Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).triggerPlant(plantTrigger);
                 ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
                 try {
                     caller.call();

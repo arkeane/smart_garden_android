@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_margin="20dp"
-            android:background="@drawable/baseline_arrow_back_24"></ImageButton>
+            android:background="@drawable/baseline_arrow_back_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/plant_created"></TextView>
+            android:text="@string/plant_created" />
     </LinearLayout>
 
 </RelativeLayout>

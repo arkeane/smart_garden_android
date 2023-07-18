@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.maiot.smart_garden_android.R;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import java.io.IOException;
 
@@ -46,7 +46,7 @@ public class PlantListFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getAllPlantsNames();
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getAllPlantsNames();
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();

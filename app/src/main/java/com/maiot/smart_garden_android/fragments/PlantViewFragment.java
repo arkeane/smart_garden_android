@@ -27,7 +27,7 @@ import com.maiot.smart_garden_android.backend.Plant;
 import com.maiot.smart_garden_android.backend.SensorData;
 import com.maiot.smart_garden_android.backend.service.Gravatar;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -74,7 +74,7 @@ public class PlantViewFragment extends Fragment {
     public String getData(retrofit2.Retrofit retrofit) {
         long to = System.currentTimeMillis();
         long from = to - 1000 * 60 * 60 * 12;
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantData(this.name, from, to);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantData(this.name, from, to);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -203,7 +203,7 @@ public class PlantViewFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getPlantInfo(this.name);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantInfo(this.name);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();
@@ -264,7 +264,7 @@ public class PlantViewFragment extends Fragment {
         btnWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ResponseBody> call = retrofit.create(SmartGardenService.class).waterPlant(name);
+                Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).waterPlant(name);
                 ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
                 try {
                     caller.call();

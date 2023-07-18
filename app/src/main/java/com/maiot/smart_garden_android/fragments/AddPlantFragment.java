@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.maiot.smart_garden_android.R;
 import com.maiot.smart_garden_android.backend.Plant;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
-import com.maiot.smart_garden_android.backend.service.SmartGardenService;
+import com.maiot.smart_garden_android.backend.service.SmartGardenAPICalls;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -52,7 +52,7 @@ public class AddPlantFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        SmartGardenService service = retrofit.create(SmartGardenService.class);
+        SmartGardenAPICalls service = retrofit.create(SmartGardenAPICalls.class);
 
         btnAddPlant.setOnClickListener(new View.OnClickListener() {
             @Override

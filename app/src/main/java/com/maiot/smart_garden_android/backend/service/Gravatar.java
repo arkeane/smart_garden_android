@@ -42,7 +42,7 @@ public class Gravatar {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .build();
-        Call<ResponseBody> call = retrofit.create(SmartGardenService.class).getAvatar(hash, size, type);
+        Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getAvatar(hash, size, type);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
             caller.call();

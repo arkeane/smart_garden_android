@@ -38,36 +38,36 @@ public class PlantTrigger {
         return status;
     }
 
-    public Float getTemperature() {
-        return temperature;
-    }
-
-    public Float getHumidity() {
-        return humidity;
-    }
-
-    public Float getLight() {
-        return light;
-    }
-
-    public Float getMoisture() {
-        return moisture;
-    }
-
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Float getTemperature() {
+        return temperature;
     }
 
     public void setTemperature(Float temperature) {
         this.temperature = temperature;
     }
 
+    public Float getHumidity() {
+        return humidity;
+    }
+
     public void setHumidity(Float humidity) {
         this.humidity = humidity;
     }
 
+    public Float getLight() {
+        return light;
+    }
+
     public void setLight(Float light) {
         this.light = light;
+    }
+
+    public Float getMoisture() {
+        return moisture;
     }
 
     public void setMoisture(Float moisture) {

@@ -1,7 +1,5 @@
 package com.maiot.smart_garden_android.backend.service;
 
-import android.content.Context;
-
 import androidx.fragment.app.Fragment;
 
 import com.maiot.smart_garden_android.R;
@@ -14,13 +12,11 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class ServerCaller<T> {
-
+    private final ExecutorService executor;
     Call<T> call;
     Future fut;
     Integer responseCode;
     Response<T> response;
-    private final ExecutorService executor;
-
 
     public ServerCaller(Call<T> call) {
         this.executor = java.util.concurrent.Executors.newSingleThreadExecutor();
@@ -36,6 +32,7 @@ public class ServerCaller<T> {
             throw new RuntimeException(e);
         }
     }
+
     public void connError(Fragment context) {
         context.requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ConnErrorFragment()).commit();
     }

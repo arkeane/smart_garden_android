@@ -33,6 +33,7 @@ public class SensorData implements java.io.Serializable {
         this.light = sensorData.getLight();
         this.moisture = sensorData.getMoisture();
     }
+
     public Date getDate() {
         return date;
     }
