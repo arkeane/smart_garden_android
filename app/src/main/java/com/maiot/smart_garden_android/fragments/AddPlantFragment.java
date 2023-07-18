@@ -1,12 +1,12 @@
 package com.maiot.smart_garden_android.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,9 +16,6 @@ import com.maiot.smart_garden_android.backend.Plant;
 import com.maiot.smart_garden_android.backend.service.ServerCaller;
 import com.maiot.smart_garden_android.backend.service.SmartGardenService;
 
-
-import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -26,11 +23,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddPlantFragment extends Fragment {
+    private ImageButton btnBack;
     private Button btnAddPlant;
 
     private EditText etPlantName;
     private EditText etPlantDescription;
-
     private TextView tvPlantCreated;
 
     @Override
@@ -41,6 +38,7 @@ public class AddPlantFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnBack = getView().findViewById(R.id.btnBackList);
         btnAddPlant = getView().findViewById(R.id.btnAddPlant);
 
         etPlantName = getView().findViewById(R.id.etPlantName);
@@ -91,10 +89,14 @@ public class AddPlantFragment extends Fragment {
                         return;
                     default:
                         tvPlantCreated.setText("Unknown error!");
-                        return;
                 }
+            }
+        });
 
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlantListFragment()).commit();
             }
         });
     }

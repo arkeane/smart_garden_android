@@ -1,6 +1,5 @@
 package com.maiot.smart_garden_android.fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +43,7 @@ public class TriggerFragment extends Fragment {
     private Button buttonEnable;
     private Button buttonDisable;
     private ImageButton buttonBack;
+
     public TriggerFragment(String name) {
         this.name = name;
     }
@@ -103,7 +103,7 @@ public class TriggerFragment extends Fragment {
         buttonUpdate = view.findViewById(R.id.btnUpdateTrigger);
         buttonEnable = view.findViewById(R.id.btnEnableTrigger);
         buttonDisable = view.findViewById(R.id.btnDisableTrigger);
-        buttonBack = view.findViewById(R.id.btnBack);
+        buttonBack = view.findViewById(R.id.btnBackView);
 
         bindSbToEt(seekbarHumidity, editTextHumidity);
         bindSbToEt(seekbarTemperature, editTextTemperature);
@@ -149,7 +149,7 @@ public class TriggerFragment extends Fragment {
         int light_trigger = plantTrigger.getLight().intValue();
         int moisture_trigger = plantTrigger.getMoisture().intValue();
 
-        if(enabled) {
+        if (enabled) {
             buttonEnable.setEnabled(false);
             buttonDisable.setEnabled(true);
         } else {
