@@ -97,12 +97,20 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text=""
+                    android:textSize="15sp" />
+
+                <TextView
                     android:id="@+id/tvMoisture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text=""
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tvTemperature"
@@ -110,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text=""
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tvHumidity"
@@ -118,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text=""
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tvLight"
@@ -126,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text=""
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 

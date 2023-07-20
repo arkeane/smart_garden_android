@@ -48,6 +48,7 @@ public class PlantViewFragment extends Fragment {
     private TextView tvPlantName;
     private TextView tvPlantDescription;
     private TextView tvPlantCreated;
+    private TextView tvTime;
     private TextView tvMoisture;
     private TextView tvTemperature;
     private TextView tvHumidity;
@@ -73,7 +74,7 @@ public class PlantViewFragment extends Fragment {
 
     public String getData(retrofit2.Retrofit retrofit) {
         long to = System.currentTimeMillis();
-        long from = to - 1000 * 60 * 60 * 12;
+        long from = to - 1000 * 60 * 60 * 24;
         Call<ResponseBody> call = retrofit.create(SmartGardenAPICalls.class).getPlantData(this.name, from, to);
         ServerCaller<ResponseBody> caller = new ServerCaller<>(call);
         try {
@@ -126,6 +127,10 @@ public class PlantViewFragment extends Fragment {
             case "Light":
                 tv.setText(String.format(Locale.US, "L: %d", (int) latestData.getLight()));
                 break;
+            case "Time":
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.US);
+                tv.setText(dateFormat.format(latestData.getDate()));
+                break;
         }
     }
 
@@ -133,10 +138,10 @@ public class PlantViewFragment extends Fragment {
         SimpleDateFormat dateFormatGraph = new SimpleDateFormat("HH:mm", Locale.US);
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-        series.setDrawDataPoints(true);
-        series.setColor(getResources().getColor(R.color.nord14));
+        series.setDrawDataPoints(false);
         series.setDataPointsRadius(10);
-        series.setThickness(8);
+        series.setThickness(10);
+        series.setColor(getResources().getColor(R.color.nord14));
         for (SensorData sensorDatum : sensorData) {
             Date timestamp = sensorDatum.getDate();
             double data = 0.0;
@@ -161,15 +166,17 @@ public class PlantViewFragment extends Fragment {
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
-                    // show normal x values
                     return dateFormatGraph.format(new Date((long) value));
                 } else {
                     return String.valueOf((int) value);
                 }
             }
         });
-        graph.getGridLabelRenderer().setNumHorizontalLabels(12);
-        graph.getGridLabelRenderer().setHorizontalLabelsAngle(120);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(24);
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
+        graph.getViewport().setMinX(new Date().getTime() - 1000 * 60 * 60 * 12);
+        graph.getViewport().setMaxX(new Date().getTime());
+        graph.getViewport().setXAxisBoundsManual(true);
         graph.setTitle(graphTitle);
         graph.addSeries(series);
     }
@@ -183,6 +190,7 @@ public class PlantViewFragment extends Fragment {
         tvPlantName = requireView().findViewById(R.id.tvPlantName);
         tvPlantDescription = requireView().findViewById(R.id.tvPlantDescription);
         tvPlantCreated = requireView().findViewById(R.id.tvPlantCreated);
+        tvTime = requireView().findViewById(R.id.tvTime);
         tvMoisture = requireView().findViewById(R.id.tvMoisture);
         tvTemperature = requireView().findViewById(R.id.tvTemperature);
         tvHumidity = requireView().findViewById(R.id.tvHumidity);
@@ -245,6 +253,7 @@ public class PlantViewFragment extends Fragment {
                     .create();
             sensorData = gson.fromJson(data, SensorData[].class);
 
+            setTvWithLatestData(sensorData, tvTime, "Time");
             setTvWithLatestData(sensorData, tvMoisture, "Moisture");
             setTvWithLatestData(sensorData, tvTemperature, "Temperature");
             setTvWithLatestData(sensorData, tvHumidity, "Humidity");
@@ -276,14 +285,14 @@ public class PlantViewFragment extends Fragment {
                 Integer responseCode = caller.getResponseCode();
 
                 if (responseCode == 200) {
-                    Toast.makeText(getContext(), "Watering plant for 30 seconds", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Watering plant for 2 seconds", Toast.LENGTH_LONG).show();
                     btnWater.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             btnWater.setEnabled(true);
                         }
-                    }, 30000);
+                    }, 2000);
                 } else {
                     Toast.makeText(getContext(), "Error watering plant", Toast.LENGTH_SHORT).show();
                 }
